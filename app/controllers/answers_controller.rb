@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
-  before_action :load_answer, only: %i[show]
-  before_action :load_question, only: %i[index new create]
+  before_action :set_answer, only: %i[show]
+  before_action :set_question, only: %i[index new create]
 
   def index
     @answers = @question.answers
@@ -9,6 +9,7 @@ class AnswersController < ApplicationController
   def new
     @answer = @question.answers.new
   end
+
   def show; end
 
   def create
@@ -22,11 +23,11 @@ class AnswersController < ApplicationController
 
   private
 
-  def load_question
+  def set_question
     @question = Question.find(params[:question_id])
   end
 
-  def load_answer
+  def set_answer
     @answer = Answer.find(params[:id])
   end
 
