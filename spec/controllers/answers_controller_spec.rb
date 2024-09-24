@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-
   let!(:question) { create(:question) }
-  let(:answer) { create(:answer, question: question) }
+  let(:answer) { create(:answer, question:) }
 
   describe 'GET #index' do
-    let(:answers) { create_list(:answer, 3, question: question) }
+    let(:answers) { create_list(:answer, 3, question:) }
 
     before { get :index, params: { question_id: question.id } }
+
     it 'populates an array of question answers' do
       expect(assigns(:answers)).to match_array(answers)
     end
@@ -46,7 +46,9 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       it 'saves a new Answer to the database' do
-        expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(Answer, :count).by(1)
+        expect do
+          post :create, params: { question_id: question, answer: attributes_for(:answer) }
+        end.to change(Answer, :count).by(1)
       end
 
       it 'redirects to the created answer' do
@@ -57,7 +59,9 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid params' do
       it 'does not save the answer to the database' do
-        expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) } }.to_not change(Answer, :count)
+        expect do
+          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
+        end.not_to change(Answer, :count)
       end
 
       it 're-renders the new template' do

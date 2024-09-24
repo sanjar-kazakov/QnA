@@ -1,0 +1,26 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.1
+  Exclude:
+    - "bin/*"
+    - "config/initializers/*"
+
+Metrics/MethodLength:
+  Max: 15
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+RSpec/SpecFilePathFormat:
+  Enabled: false
