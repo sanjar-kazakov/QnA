@@ -11,7 +11,7 @@ RSpec.describe Answer, type: :model do
 
   describe 'validations' do
     it 'validates presence of body' do
-      answer = Answer.new(body: nil)
+      answer = described_class.new(body: nil)
       expect(answer).to be_invalid
     end
   end
