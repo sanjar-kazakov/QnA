@@ -5,7 +5,6 @@ In order to ask questions
 As unauthenticated user
 I would like to be able to sign in
 ' do
-
   given(:user) { User.create!(email: 'user@example.com', password: 'password') }
 
   background { visit new_user_session_path }

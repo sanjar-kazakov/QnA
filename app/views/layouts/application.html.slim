@@ -9,6 +9,7 @@ html
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
   body
+    = render 'shared/nav'
     p.notice = notice
     p.alert = alert
     = yield
