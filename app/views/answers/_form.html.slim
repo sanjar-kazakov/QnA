@@ -1,6 +1,6 @@
 h3 Write an Answer:
 
-= form_with(model: [@question, @answer], local: true) do |form|
+= form_with(model: [@question, @answer], local: true, data: { turbo: false }) do |form|
   = render 'shared/errors', resource: @answer
   .field
     = form.label :body
