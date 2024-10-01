@@ -1,10 +1,10 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: %i[show]
-  before_action :set_question, only: %i[index new create]
+  before_action :set_answer, only: %i[show edit update destroy]
+  before_action :set_question, only: %i[index new create destroy]
   before_action :authenticate_user!, except: %i[index show]
 
   def index
-    @answers = @question.answers
+    @answers = @question.answers.kept
   end
 
   def new
@@ -21,6 +21,21 @@ class AnswersController < ApplicationController
     else
       render 'questions/show', flash: { alert: 'Your answer could not be submitted' }
     end
+  end
+
+  def edit; end
+
+  def update
+    if @answer.update(answer_params)
+      redirect_to question_path(@question), notice: 'Your answer has been submitted'
+    else
+      render 'questions/show', flash: { alert: 'Your answer could not be submitted' }
+    end
+  end
+
+  def destroy
+    @answer.soft_delete
+    redirect_to question_path(@question), notice: 'Your answer has been deleted'
   end
 
   private

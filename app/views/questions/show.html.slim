@@ -1,12 +1,18 @@
 h1= @question.title
 p= @question.body
 
+- if current_user == @question.user
+  = button_to t('Delete question'), question_path(@question), method: :delete
 
 h2 Answers:
 
 p
-  - @question.answers.each_with_index do |answer, i|
+  - @question.answers.kept.each_with_index do |answer, i|
     br
-    = "#{i + 1}. #{answer.body}"
+    = "#{answer.user.email}"
+    br
+    = "#{answer.body}"
+    - if current_user == answer.user
+      = button_to t('Delete answer'), question_answer_path(answer.question, answer), method: :delete
 
 = render 'answers/form'

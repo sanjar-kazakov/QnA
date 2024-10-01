@@ -143,7 +143,8 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
 
     it 'deletes the question' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      expect { delete :destroy, params: { id: question.id } }.not_to change(Question, :count)
+      expect(Question.find(question.id).discarded_at).not_to be_nil
     end
 
     it 'redirects to the questions list' do

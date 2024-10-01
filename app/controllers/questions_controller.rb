@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[show edit update destroy]
 
   def index
-    @questions = Question.all
+    @questions = Question.kept
   end
 
   def create
@@ -29,15 +29,15 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(question_params)
-      redirect_to @question
+      redirect_to @question, notice: 'Your question has been updated'
     else
       render 'edit'
     end
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    @question.soft_delete
+    redirect_to questions_path, notice: 'Your question has been deleted'
   end
 
   private

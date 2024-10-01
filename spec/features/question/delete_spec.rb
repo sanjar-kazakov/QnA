@@ -11,18 +11,17 @@ I want to be able to delete my question
 
   scenario 'Author can delete his question' do
     sign_in(author)
-
     visit question_path(question)
-    click_on 'Delete question'
+    click_on 'Delete Question'
 
-    expect(page).to have_content('Question has been deleted.')
+    expect(current_path).to eq(questions_path)
+    expect(page).to have_content('Your question has been deleted')
   end
 
   scenario 'User can not delete author\'s question' do
     sign_in(user)
-
     visit question_path(question)
 
-    expect(page).not_to have_content('Delete question')
+    expect(page).not_to have_content('Delete Question')
   end
 end
