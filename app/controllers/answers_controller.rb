@@ -17,9 +17,9 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     if @answer.save
-      redirect_to question_path(@question)
+      redirect_to question_path(@question), notice: 'Your answer has been submitted'
     else
-      render :new
+      render 'questions/show', flash: { alert: 'Your answer could not be submitted' }
     end
   end
 

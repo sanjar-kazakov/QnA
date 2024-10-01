@@ -12,11 +12,14 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question, notice: 'Your question has been created'
     else
-      render 'new'
+      puts @question.errors.full_messages
+      render :new
     end
   end
 
-  def show; end
+  def show
+    @answer = Answer.new
+  end
 
   def new
     @question = Question.new

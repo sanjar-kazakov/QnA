@@ -1,0 +1,9 @@
+h3 Write an Answer:
+
+= form_with(model: [@question, @answer], local: true) do |form|
+  = render 'shared/errors', resource: @answer
+  .field
+    = form.label :body
+    = form.text_area :body
+  .actions
+    = form.submit "Answer"

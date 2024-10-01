@@ -1,3 +1,12 @@
 h1= @question.title
 p= @question.body
 
+
+h2 Answers:
+
+p
+  - @question.answers.each_with_index do |answer, i|
+    br
+    = "#{i + 1}. #{answer.body}"
+
+= render 'answers/form'
