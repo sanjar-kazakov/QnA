@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let!(:question) { create(:question) }
-  let(:answer) { create(:answer, question:) }
   let(:user) { create(:user) }
+  let!(:question) { create(:question, user:) }
+  let(:answer) { create(:answer, question:, user:) }
 
   describe 'GET #index' do
-    let!(:answers) { create_list(:answer, 3, question:) }
+    let!(:answers) { create_list(:answer, 3, question:, user:) }
 
     before { get :index, params: { question_id: question.id } }
 
@@ -53,7 +53,10 @@ RSpec.describe AnswersController, type: :controller do
     context 'with valid params' do
       it 'saves a new Answer to the database' do
         expect do
-          post :create, params: { question_id: question, answer: attributes_for(:answer) }
+          post :create, params: {
+            question_id: question,
+            answer: attributes_for(:answer).merge(user_id: user.id)
+          }
         end.to change(Answer, :count).by(1)
       end
 

@@ -12,4 +12,14 @@ RSpec.describe User, type: :model do
       expect(user).not_to be_valid
     end
   end
+
+  describe 'associations' do
+    let(:user) { create(:user) }
+
+    it 'has many questions' do
+      create_list(:question, 3, user:)
+
+      expect(user.questions.count).to eq(3)
+    end
+  end
 end

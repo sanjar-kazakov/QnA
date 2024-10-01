@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
   let(:user) { create(:user) }
+  let(:question) { create(:question, user:) }
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 3) }
+    let(:questions) { create_list(:question, 3, user:) }
 
     before { get :index }
 
@@ -19,7 +19,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    before { get :show, params: { id: question } }
+    before { get :show, params: { user_id: user, id: question } }
 
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq(question)
@@ -66,7 +66,9 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with valid params' do
       it 'saves a new question in the database' do
         expect do
-          post :create, params: { question: attributes_for(:question) }
+          post :create, params: {
+            question: attributes_for(:question) .merge(user_id: user.id)
+          }
         end.to change(Question, :count).by(1)
       end
 
