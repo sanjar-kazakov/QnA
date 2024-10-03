@@ -1,0 +1,11 @@
+p= link_to 'New Question', new_question_path
+
+h2 = t('.header')
+
+table.table.table-hover.table-bordered
+  tr style="text-align: center;"
+    th = t('.title')
+    th = t('.body')
+    th = t('.actions')
+
+  = render @questions

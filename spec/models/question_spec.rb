@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Question, type: :model do
+  let(:user) { create(:user) }
+  let(:question) { create(:question, user:) }
+
   describe 'associations' do
     it 'has many answers' do
-      question = create(:question)
-      create(:answer, question:)
-      create(:answer, question:)
+      create_list(:answer, 2, question:, user:)
+
       expect(question.answers.count).to eq(2)
     end
   end

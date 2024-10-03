@@ -1,0 +1,25 @@
+require 'rails_helper'
+
+RSpec.describe User, type: :model do
+  describe 'validations' do
+    it 'validates presence of email' do
+      user = described_class.new(email: '')
+      expect(user).not_to be_valid
+    end
+
+    it 'validates presence of password' do
+      user = described_class.new(password: '')
+      expect(user).not_to be_valid
+    end
+  end
+
+  describe 'associations' do
+    let(:user) { create(:user) }
+
+    it 'has many questions' do
+      create_list(:question, 3, user:)
+
+      expect(user.questions.count).to eq(3)
+    end
+  end
+end
