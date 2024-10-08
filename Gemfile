@@ -49,6 +49,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'devise'
+gem 'jquery-rails'
 gem 'slim-rails'
 
 group :development, :test do
@@ -76,7 +77,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
+  gem 'launchy'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
-  gem 'launchy'
 end
