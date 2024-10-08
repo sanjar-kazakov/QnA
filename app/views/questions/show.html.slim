@@ -4,15 +4,15 @@ p= @question.body
 - if current_user == @question.user
   = button_to t('Delete question'), question_path(@question), method: :delete
 
-h2 Answers:
-
-p
-  - @question.answers.kept.each_with_index do |answer, i|
-    br
-    = "#{answer.user.email}"
-    br
-    = "#{answer.body}"
-    - if current_user == answer.user
-      = button_to t('Delete answer'), question_answer_path(answer.question, answer), method: :delete
+.answers
+  h2 Answers:
+  p
+    - @question.answers.kept.each_with_index do |answer, i|
+      br
+      = "#{answer.user.email}"
+      br
+      = "#{answer.body}"
+      - if current_user == answer.user
+        = button_to t('Delete answer'), question_answer_path(answer.question, answer), method: :delete
 
 = render 'answers/form'

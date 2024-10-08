@@ -19,7 +19,9 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to question_path(@question), notice: 'Your answer has been submitted'
     else
-      render 'questions/show', flash: { alert: 'Your answer could not be submitted' }
+      respond_to do |format|
+        format.js
+      end
     end
   end
 

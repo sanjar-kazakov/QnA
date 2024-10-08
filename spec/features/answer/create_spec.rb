@@ -16,12 +16,14 @@ feature 'User can create an answer', '
       click_on 'Show'
     end
 
-    scenario 'can answer to the question' do
+    scenario 'can answer to the question', js: true do
       fill_in 'Body', with: 'Test question'
       click_on 'Answer'
 
       expect(page).to have_content 'Your answer has been submitted'
-      expect(page).to have_content 'Test question'
+      within '.answers' do
+        expect(page).to have_content 'Test question'
+      end
     end
 
     scenario 'creates an answer with errors' do
