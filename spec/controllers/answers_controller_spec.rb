@@ -55,27 +55,27 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           post :create, params: {
             question_id: question,
-            answer: attributes_for(:answer).merge(user_id: user.id)
+            answer: attributes_for(:answer).merge(user_id: user.id), format: :js
           }
         end.to change(Answer, :count).by(1)
       end
 
       it 'redirects to the created answer' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer) }
-        expect(response).to redirect_to question_path(question)
+        post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :create
       end
     end
 
     context 'with invalid params' do
       it 'does not save the answer to the database' do
         expect do
-          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
+          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
         end.not_to change(Answer, :count)
       end
 
       it 're-renders the new template' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
-        expect(response).to render_template 'questions/show'
+        post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
+        expect(response).to render_template :create
       end
     end
   end

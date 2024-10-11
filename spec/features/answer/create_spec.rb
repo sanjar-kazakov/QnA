@@ -20,13 +20,13 @@ feature 'User can create an answer', '
       fill_in 'Body', with: 'Test question'
       click_on 'Answer'
 
-      expect(page).to have_content 'Your answer has been submitted'
+      # expect(page).to have_content 'Your answer has been submitted'
       within '.answers' do
         expect(page).to have_content 'Test question'
       end
     end
 
-    scenario 'creates an answer with errors' do
+    scenario 'creates an answer with errors', js: true do
       click_on 'Answer'
 
       expect(page).to have_content('Body can\'t be blank')

@@ -1,0 +1,8 @@
+p
+  = answer.user.email
+p
+  = answer.created_at
+p
+  = answer.body
+  - if current_user == answer.user
+    = button_to t('Delete answer'), question_answer_path(answer.question, answer), method: :delete

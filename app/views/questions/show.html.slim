@@ -6,13 +6,6 @@ p= @question.body
 
 .answers
   h2 Answers:
-  p
-    - @question.answers.kept.each_with_index do |answer, i|
-      br
-      = "#{answer.user.email}"
-      br
-      = "#{answer.body}"
-      - if current_user == answer.user
-        = button_to t('Delete answer'), question_answer_path(answer.question, answer), method: :delete
+  = render @question.answers.kept
 
 = render 'answers/form'
