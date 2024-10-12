@@ -16,11 +16,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    if @answer.save
-      redirect_to question_path(@question), notice: 'Your answer has been submitted'
-    else
-      render 'questions/show', flash: { alert: 'Your answer could not be submitted' }
-    end
+    @answer.save
   end
 
   def edit; end
