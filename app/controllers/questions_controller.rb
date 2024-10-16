@@ -28,11 +28,7 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question, notice: 'Your question has been updated'
-    else
-      render 'edit'
-    end
+    @question.update(question_params)
   end
 
   def destroy

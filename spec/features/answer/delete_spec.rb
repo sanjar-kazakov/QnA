@@ -10,7 +10,7 @@ I want to be able to delete my answer
   let(:question) { create(:question, user: user) }
   let!(:answer) { create(:answer, question:, user: author) }
 
-  scenario 'Author can delete his question' do
+  scenario 'Author can delete his answer' do
     sign_in(author)
     visit question_path(question)
 
@@ -20,7 +20,7 @@ I want to be able to delete my answer
     expect(page).to have_content('Your answer has been deleted')
   end
 
-  scenario 'User can not delete author\'s question' do
+  scenario 'User can not delete author\'s answer' do
     sign_in(user)
     visit question_path(question)
 

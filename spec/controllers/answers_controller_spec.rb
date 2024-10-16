@@ -73,9 +73,40 @@ RSpec.describe AnswersController, type: :controller do
         end.not_to change(Answer, :count)
       end
 
-      it 're-renders the new template' do
+      it 're-renders the create template' do
         post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
         expect(response).to render_template :create
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    before { login(user) }
+
+    context 'with valid params' do
+      let!(:updated_answer) { patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js } }
+
+      it 'changes @answer attributes' do
+        answer.reload
+        expect(answer.body).to eq('new body')
+      end
+
+      it 'renders the update template' do
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'with invalid params' do
+      let!(:invalid_answer) { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js }
+
+      it 'does not change @answer attributes' do
+        old_body = answer.body
+        answer.reload
+        expect(answer.body).to eq(old_body)
+      end
+
+      it 'renders the update template' do
+        expect(response).to render_template :update
       end
     end
   end
