@@ -1,4 +1,7 @@
-tr
-  td style="text-align: center;" = question.title
-  td style="text-align: center;" = question.body
-  td style="text-align: center;" = link_to t('.show'), question_path(question)
+div class="question"
+  h1= question.title
+  p= question.body
+
+  - if user_signed_in? && current_user == question.user
+    = button_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
+    = button_to 'Delete', question_path(question), method: :delete

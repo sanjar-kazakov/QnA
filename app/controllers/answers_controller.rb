@@ -28,7 +28,6 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.soft_delete
-    redirect_to question_path(@answer.question), notice: 'Your answer has been deleted'
   end
 
   private
