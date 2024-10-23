@@ -42,6 +42,7 @@ I would like to edit my answer
 
   scenario 'cannot edit someone else\'s answer', js: true  do
     sign_in(user)
+    sleep 1
     visit question_path(question)
 
     within '.answers' do
@@ -50,6 +51,7 @@ I would like to edit my answer
   end
 
   scenario 'unauthorized user cannot edit answer' do
+    sleep 1
     visit question_path(question)
 
     expect(page).not_to have_link 'Edit answer'
