@@ -1,14 +1,14 @@
-- if answer.present?
-  div id="answer-#{answer.id}" class="best-answer"
+- if best_answer.present?
+  div id="answer-#{best_answer.id}" class="best-answer"
     h3
       | Best answer:
     p
       | Answered by:
-      = answer.user.email
+      = best_answer.user.email
     p
       | Created at:
-      = answer.created_at.strftime("%Y-%m-%d %H:%M")
+      = best_answer.created_at.strftime("%Y-%m-%d %H:%M")
     p
-      = answer.body
+      = best_answer.body
 
-    = render 'shared/answer_controls', answer: answer
+    = render 'shared/answer_controls', answer: best_answer, question: @question, best_answer: @best_answer
