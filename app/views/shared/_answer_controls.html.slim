@@ -2,7 +2,7 @@
   = button_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
   = button_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
-- if current_user.id == question.user_id && best_answer.id != answer.id
+- if current_user.id == question.user_id && best_answer&.id != answer.id
   = button_to 'Mark as best answer', mark_as_best_answer_path(answer), method: :patch, remote: true
 
 = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |form|
