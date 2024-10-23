@@ -16,7 +16,7 @@ feature 'User can create an answer', '
       click_on 'Show'
     end
 
-    scenario 'can answer to the question', js: true do
+    scenario 'can answer to the question', :js do
       fill_in 'Body', with: 'Test question'
       click_on 'Answer'
 
@@ -26,7 +26,7 @@ feature 'User can create an answer', '
       end
     end
 
-    scenario 'creates an answer with errors', js: true do
+    scenario 'creates an answer with errors', :js do
       click_on 'Answer'
 
       expect(page).to have_content('Body can\'t be blank')

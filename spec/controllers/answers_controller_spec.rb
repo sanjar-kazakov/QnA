@@ -84,7 +84,7 @@ RSpec.describe AnswersController, type: :controller do
     before { login(user) }
 
     context 'with valid params' do
-      let!(:updated_answer) { patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js } }
+      before { patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js } }
 
       it 'changes @answer attributes' do
         answer.reload
@@ -97,7 +97,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'with invalid params' do
-      let!(:invalid_answer) { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js }
+      before { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js }
 
       it 'does not change @answer attributes' do
         old_body = answer.body
@@ -108,6 +108,22 @@ RSpec.describe AnswersController, type: :controller do
       it 'renders the update template' do
         expect(response).to render_template :update
       end
+    end
+  end
+
+  describe 'PATCH #mark_as_best' do
+    before do
+      login(user)
+      patch :mark_as_best, params: { id: answer, format: :js }
+    end
+
+    it 'marks the answer as best' do
+      question.reload
+      expect(question.best_answer.id).to eq(answer.id)
+    end
+
+    it 'renders the mark_as_best template' do
+      expect(response).to render_template :mark_as_best
     end
   end
 end

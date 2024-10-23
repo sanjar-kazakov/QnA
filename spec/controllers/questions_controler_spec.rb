@@ -67,7 +67,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'saves a new question in the database' do
         expect do
           post :create, params: {
-            question: attributes_for(:question) .merge(user_id: user.id)
+            question: attributes_for(:question).merge(user_id: user.id)
           }
         end.to change(Question, :count).by(1)
       end
@@ -97,7 +97,14 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with valid params' do
       before do
-        patch :update, params: { id: question, question: { title: 'New Question', body: 'New Question Description' }, format: :js  }
+        patch :update, params: {
+          id: question,
+          question: {
+            title: 'New Question',
+            body: 'New Question Description'
+          },
+          format: :js
+        }
         question.reload
       end
 
@@ -119,7 +126,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid params' do
-      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js  }
+      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js }
 
       it 'does not change the question title' do
         question.reload

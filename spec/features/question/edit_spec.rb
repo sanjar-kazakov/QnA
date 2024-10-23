@@ -9,7 +9,7 @@ I would like to edit my question
   let(:user) { create :user }
   let!(:question) { create(:question, user: author) }
 
-  describe 'Authenticated user', js: true do
+  describe 'Authenticated user', :js do
     before do
       sign_in(author)
       sleep 1
@@ -44,10 +44,9 @@ I would like to edit my question
       expect(page).to have_content 'Title can\'t be blank'
       expect(page).to have_content 'Body can\'t be blank'
     end
-
   end
 
-  scenario 'cannot edit someone else\'s question', js: true  do
+  scenario 'cannot edit someone else\'s question', :js do
     sign_in(user)
     visit question_path(question)
 

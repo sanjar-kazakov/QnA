@@ -7,10 +7,10 @@ I want to be able to delete my answer
 ' do
   let(:author) { create(:user) }
   let(:user) { create(:user) }
-  let!(:question) { create(:question, user: user) }
+  let!(:question) { create(:question, user:) }
   let!(:answer) { create(:answer, question:, user: author) }
 
-  scenario 'Author can delete his answer', js: true do
+  scenario 'Author can delete his answer', :js do
     sign_in(author)
     sleep 2
     visit question_path(question)
@@ -23,8 +23,6 @@ I want to be able to delete my answer
       expect(page).not_to have_content(answer.body)
     end
   end
-
-
 
   scenario 'User can not delete author\'s answer' do
     sign_in(author)

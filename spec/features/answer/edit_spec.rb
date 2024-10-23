@@ -10,7 +10,7 @@ I would like to edit my answer
   let!(:question) { create :question }
   let!(:answer) { create(:answer, question:, user: author) }
 
-  describe 'Authenticated user', js: true do
+  describe 'Authenticated user', :js do
     before do
       sign_in(author)
       sleep 1
@@ -23,9 +23,9 @@ I would like to edit my answer
         fill_in 'Your answer', with: 'Edited answer'
         click_on 'Save'
 
-        expect(page).to_not have_content answer.body
+        expect(page).not_to have_content answer.body
         expect(page).to have_content 'Edited answer'
-        expect(page).to_not have_selector 'textarea'
+        expect(page).not_to have_selector 'textarea'
       end
     end
 
@@ -40,7 +40,7 @@ I would like to edit my answer
     end
   end
 
-  scenario 'cannot edit someone else\'s answer', js: true  do
+  scenario 'cannot edit someone else\'s answer', :js do
     sign_in(user)
     sleep 1
     visit question_path(question)
