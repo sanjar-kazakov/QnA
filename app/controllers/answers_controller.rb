@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: %i[show edit update destroy]
+  before_action :set_answer, only: %i[show edit update destroy mark_as_best]
   before_action :set_question, only: %i[index new create]
   before_action :authenticate_user!, except: %i[index show]
 
@@ -22,12 +22,19 @@ class AnswersController < ApplicationController
   def edit; end
 
   def update
-    @answer.update(answer_params) if current_user == @answer.user
-    @question = @answer.question
+    @answer.update(answer_params) if current_user.id == @answer.user_id
+
+    set_answers_data
   end
 
   def destroy
-    @answer.soft_delete
+    @answer.soft_delete if current_user.id == @answer.user_id
+  end
+
+  def mark_as_best
+    @answer.mark_as_best
+
+    set_answers_data
   end
 
   private
@@ -38,6 +45,12 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def set_answers_data
+    @question = @answer.question
+    @best_answer = @question.best_answer
+    @other_answers = @question.answers.where.not(id: @best_answer).kept
   end
 
   def answer_params

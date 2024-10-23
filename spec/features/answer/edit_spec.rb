@@ -13,6 +13,7 @@ I would like to edit my answer
   describe 'Authenticated user', js: true do
     before do
       sign_in(author)
+      sleep 1
       visit question_path(question)
     end
 

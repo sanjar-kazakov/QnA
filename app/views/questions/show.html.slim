@@ -1,18 +1,7 @@
-= render partial: 'question', locals: { question: @question }
-
-= form_with model: @question, local: false, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
-  .question-errors
-    = render 'shared/errors', resource: @question
-  .field
-    = f.label :title, 'Title'
-    = f.text_field :title
-    = f.label :body, 'Body'
-    = f.text_area :body
-  .actions
-    = f.submit 'Save'
+= render @question
 
 h2 Answers:
 .answers
-  = render @question.answers.kept
+  = render 'answers/answers_index', best_answer: @best_answer, other_answers: @other_answers
 
-= render 'answers/form'
+= render 'answers/form', question: @question, answer: @answer

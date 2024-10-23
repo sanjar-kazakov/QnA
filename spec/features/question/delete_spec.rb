@@ -11,6 +11,7 @@ I want to be able to delete my question
 
   scenario 'Author can delete his question' do
     sign_in(author)
+    sleep 1
     visit question_path(question)
 
     click_on 'Delete'

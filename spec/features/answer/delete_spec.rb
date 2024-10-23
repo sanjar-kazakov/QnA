@@ -10,15 +10,21 @@ I want to be able to delete my answer
   let(:question) { create(:question, user: user) }
   let!(:answer) { create(:answer, question:, user: author) }
 
-  scenario 'Author can delete his answer' do
+  scenario 'Author can delete his answer', js: true do
     sign_in(author)
+    sleep 2
     visit question_path(question)
 
-    click_on 'Delete Answer'
+    within '.answers' do
+      click_on 'Delete answer'
 
-    expect(current_path).to eq(question_path(question))
-    expect(page).to have_content('Your answer has been deleted')
+      page.accept_alert 'Are you sure?'
+
+      expect(page).not_to have_content(answer.body)
+    end
   end
+
+
 
   scenario 'User can not delete author\'s answer' do
     sign_in(user)

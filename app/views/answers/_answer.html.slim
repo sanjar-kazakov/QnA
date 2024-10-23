@@ -1,16 +1,11 @@
 div id="answer-#{answer.id}" class="answer"
   p
+    | Answered by:
     = answer.user.email
   p
-    = answer.created_at
+    | Created at:
+    = answer.created_at.strftime("%Y-%m-%d %H:%M")
   p
     = answer.body
-  
-  - if user_signed_in? && current_user == answer.user
-    = button_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-    = button_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
-  
-    = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |form|
-      = form.label :body, 'Your answer'
-      = form.text_area :body
-      = form.submit 'Save'
+
+  = render 'shared/answer_controls', answer: answer

@@ -19,6 +19,9 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @best_answer = @question.best_answer
+    @best_answer = nil if @best_answer&.discarded_at.present?
+    @other_answers = @question.answers.where.not(id: @best_answer).kept
   end
 
   def new
@@ -28,11 +31,11 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def update
-    @question.update(question_params) if current_user == @question.user
+    @question.update(question_params) if current_user.id == @question.user_id
   end
 
   def destroy
-    @question.soft_delete
+    @question.soft_delete if current_user.id == @question.user_id
     redirect_to questions_path, notice: 'Your question has been deleted'
   end
 
