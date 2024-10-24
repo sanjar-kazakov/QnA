@@ -31,11 +31,11 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def update
-    @question.update(question_params) if current_user.id == @question.user_id
+    @question.update(question_params) if current_user.is_author?(@question)
   end
 
   def destroy
-    @question.soft_delete if current_user.id == @question.user_id
+    @question.soft_delete if current_user.is_author?(@question)
     redirect_to questions_path, notice: 'Your question has been deleted'
   end
 

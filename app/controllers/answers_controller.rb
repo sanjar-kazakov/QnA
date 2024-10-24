@@ -22,13 +22,13 @@ class AnswersController < ApplicationController
   def edit; end
 
   def update
-    @answer.update(answer_params) if current_user.id == @answer.user_id
+    @answer.update(answer_params) if current_user.is_author?(@answer)
 
     set_answers_data
   end
 
   def destroy
-    @answer.soft_delete if current_user.id == @answer.user_id
+    @answer.soft_delete if current_user.is_author?(@answer)
   end
 
   def mark_as_best
