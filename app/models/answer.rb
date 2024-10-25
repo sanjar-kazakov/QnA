@@ -9,4 +9,8 @@ class Answer < ApplicationRecord
   def soft_delete
     update(discarded_at: Time.current)
   end
+
+  def mark_as_best
+    question.update(best_answer_id: id)
+  end
 end

@@ -19,6 +19,9 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @best_answer = @question.best_answer
+    @best_answer = nil if @best_answer&.discarded_at.present?
+    @other_answers = @question.answers.where.not(id: @best_answer).kept
   end
 
   def new
@@ -28,15 +31,11 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question, notice: 'Your question has been updated'
-    else
-      render 'edit'
-    end
+    @question.update(question_params) if current_user.is_author?(@question)
   end
 
   def destroy
-    @question.soft_delete
+    @question.soft_delete if current_user.is_author?(@question)
     redirect_to questions_path, notice: 'Your question has been deleted'
   end
 

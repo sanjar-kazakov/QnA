@@ -1,0 +1,14 @@
+- if best_answer.present?
+  div id="answer-#{best_answer.id}" class="best-answer"
+    h3
+      | Best answer:
+    p
+      | Answered by:
+      = best_answer.user.email
+    p
+      | Created at:
+      = best_answer.created_at.strftime("%Y-%m-%d %H:%M")
+    p
+      = best_answer.body
+
+    = render 'shared/answer_controls', answer: best_answer, question: @question, best_answer: @best_answer

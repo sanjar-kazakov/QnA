@@ -55,28 +55,75 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           post :create, params: {
             question_id: question,
-            answer: attributes_for(:answer).merge(user_id: user.id)
+            answer: attributes_for(:answer).merge(user_id: user.id), format: :js
           }
         end.to change(Answer, :count).by(1)
       end
 
       it 'redirects to the created answer' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer) }
-        expect(response).to redirect_to question_path(question)
+        post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :create
       end
     end
 
     context 'with invalid params' do
       it 'does not save the answer to the database' do
         expect do
-          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
+          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
         end.not_to change(Answer, :count)
       end
 
-      it 're-renders the new template' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
-        expect(response).to render_template 'questions/show'
+      it 're-renders the create template' do
+        post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
+        expect(response).to render_template :create
       end
+    end
+  end
+
+  describe 'PATCH #update' do
+    before { login(user) }
+
+    context 'with valid params' do
+      before { patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js } }
+
+      it 'changes @answer attributes' do
+        answer.reload
+        expect(answer.body).to eq('new body')
+      end
+
+      it 'renders the update template' do
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'with invalid params' do
+      before { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js }
+
+      it 'does not change @answer attributes' do
+        old_body = answer.body
+        answer.reload
+        expect(answer.body).to eq(old_body)
+      end
+
+      it 'renders the update template' do
+        expect(response).to render_template :update
+      end
+    end
+  end
+
+  describe 'PATCH #mark_as_best' do
+    before do
+      login(user)
+      patch :mark_as_best, params: { id: answer, format: :js }
+    end
+
+    it 'marks the answer as best' do
+      question.reload
+      expect(question.best_answer.id).to eq(answer.id)
+    end
+
+    it 'renders the mark_as_best template' do
+      expect(response).to render_template :mark_as_best
     end
   end
 end

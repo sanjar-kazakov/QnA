@@ -1,0 +1,15 @@
+- if is_author?(current_user, answer)
+  = button_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+  = button_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+
+- if is_question_author(current_user, question, best_answer, answer)
+  = button_to 'Mark as best answer', mark_as_best_answer_path(answer), method: :patch, remote: true
+
+= form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |form|
+  .answer-errors
+    = render 'shared/errors', resource: answer
+  .field
+    = form.label :body, 'Your answer'
+    = form.text_area :body
+  .actions
+    = form.submit 'Save'

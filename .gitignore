@@ -31,5 +31,6 @@
 /config/master.key
 
 /config/database.yml
+/node_modules
 
 .idea

@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: %i[show edit update destroy]
-  before_action :set_question, only: %i[index new create destroy]
+  before_action :set_answer, only: %i[show edit update destroy mark_as_best]
+  before_action :set_question, only: %i[index new create]
   before_action :authenticate_user!, except: %i[index show]
 
   def index
@@ -16,26 +16,25 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    if @answer.save
-      redirect_to question_path(@question), notice: 'Your answer has been submitted'
-    else
-      render 'questions/show', flash: { alert: 'Your answer could not be submitted' }
-    end
+    @answer.save
   end
 
   def edit; end
 
   def update
-    if @answer.update(answer_params)
-      redirect_to question_path(@question), notice: 'Your answer has been submitted'
-    else
-      render 'questions/show', flash: { alert: 'Your answer could not be submitted' }
-    end
+    @answer.update(answer_params) if current_user.is_author?(@answer)
+
+    set_answers_data
   end
 
   def destroy
-    @answer.soft_delete
-    redirect_to question_path(@question), notice: 'Your answer has been deleted'
+    @answer.soft_delete if current_user.is_author?(@answer)
+  end
+
+  def mark_as_best
+    @answer.mark_as_best
+
+    set_answers_data
   end
 
   private
@@ -46,6 +45,12 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def set_answers_data
+    @question = @answer.question
+    @best_answer = @question.best_answer
+    @other_answers = @question.answers.where.not(id: @best_answer).kept
   end
 
   def answer_params

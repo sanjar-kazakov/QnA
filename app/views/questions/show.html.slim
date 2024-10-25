@@ -1,18 +1,7 @@
-h1= @question.title
-p= @question.body
-
-- if current_user == @question.user
-  = button_to t('Delete question'), question_path(@question), method: :delete
+= render @question
 
 h2 Answers:
+.answers
+  = render 'answers/answers_index', best_answer: @best_answer, other_answers: @other_answers
 
-p
-  - @question.answers.kept.each_with_index do |answer, i|
-    br
-    = "#{answer.user.email}"
-    br
-    = "#{answer.body}"
-    - if current_user == answer.user
-      = button_to t('Delete answer'), question_answer_path(answer.question, answer), method: :delete
-
-= render 'answers/form'
+= render 'answers/form', question: @question, answer: @answer

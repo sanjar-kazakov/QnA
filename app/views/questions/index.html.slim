@@ -1,11 +1,20 @@
-p= link_to 'New Question', new_question_path
+p = link_to t('New Question'), new_question_path, class: 'btn btn-primary'
 
-h2 = t('.header')
+h2 = t('Questions')
 
-table.table.table-hover.table-bordered
-  tr style="text-align: center;"
-    th = t('.title')
-    th = t('.body')
-    th = t('.actions')
+- if @questions.any?
+  table.table.table-hover.table-bordered
+    thead
+      tr.text-center
+        th = t('.title')
+        th = t('.body')
+        th = t('.actions')
 
-  = render @questions
+    tbody
+      - @questions.each do |question|
+        tr
+          td style="text-align: center;" = question.title
+          td style="text-align: center;" = question.body
+          td style="text-align: center;" = link_to t('.show'), question_path(question)
+- else
+  p = 'No questions asked yet.'
