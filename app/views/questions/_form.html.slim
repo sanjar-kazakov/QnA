@@ -2,10 +2,16 @@
   .question-errors
     = render 'shared/errors', resource: @question
   .field
-    = f.label :title, 'Title'
-    = f.text_field :title
-    = f.label :body, 'Body'
-    = f.text_area :body
+    p
+      = f.label :title, 'Title'
+      = f.text_field :title
+    p
+      = f.label :body, 'Body'
+      = f.text_area :body
+    p
+      = f.label :files
+      = f.file_field :files, multiple: true
   .actions
-    = f.submit 'Ask'
+    p
+      = f.submit 'Ask'
 
