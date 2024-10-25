@@ -1,12 +1,8 @@
-- signed_in = user_signed_in?
-- is_author = signed_in && current_user.id == answer.user_id
-- is_question_author = signed_in && current_user.id == question.user_id && best_answer&.id != answer.id
-
-- if is_author
+- if is_author?(current_user, answer)
   = button_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
   = button_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
-- if is_question_author
+- if is_question_author(current_user, question, best_answer, answer)
   = button_to 'Mark as best answer', mark_as_best_answer_path(answer), method: :patch, remote: true
 
 = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |form|
@@ -17,23 +13,3 @@
     = form.text_area :body
   .actions
     = form.submit 'Save'
-
-/ не знаю правильно ли делать так, как сделал выше. Изначально сделал так как ниже, но из-за дублирования кода, решил отрефакторить.
-/ После ревью удалю
-
-
-/ - if user_signed_in? && current_user.id == answer.user_id
-/   = button_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-/   = button_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
-/
-/ - if user_signed_in? && current_user.id == question.user_id && best_answer&.id != answer.id
-/   = button_to 'Mark as best answer', mark_as_best_answer_path(answer), method: :patch, remote: true
-/
-/ = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |form|
-/   .answer-errors
-/     = render 'shared/errors', resource: answer
-/   .field
-/     = form.label :body, 'Your answer'
-/     = form.text_area :body
-/   .actions
-/     = form.submit 'Save'
