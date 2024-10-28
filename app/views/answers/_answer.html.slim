@@ -10,7 +10,11 @@ div id="answer-#{answer.id}" class="answer"
   p
   - if answer.files.attached?
     - answer.files.each do |file|
-      p= link_to file.filename.to_s, url_for(file)
+      - if file.representable?
+        = link_to url_for(file) do
+          = image_tag file.representation(resize_to_limit: [50, 50]).processed
+      - else
+        p= link_to file.filename.to_s, url_for(file)
 
   = render 'shared/answer_controls', answer: answer, question: @question, best_answer: @best_answer
 
