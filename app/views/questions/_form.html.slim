@@ -1,6 +1,6 @@
-= form_with(model: @question, local: true, data: { turbo: false }) do |f|
+= form_with(model: question, local: true, data: { turbo: false }) do |f|
   .question-errors
-    = render 'shared/errors', resource: @question
+    = render 'shared/errors', resource: question
   .field
     p
       = f.label :title, 'Title'
