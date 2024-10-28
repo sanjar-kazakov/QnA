@@ -8,7 +8,7 @@ I would like to edit my answer
   let(:author) { create :user }
   let(:user) { create :user }
   let!(:question) { create :question }
-  let!(:answer) { create(:answer, question:, user: author) }
+  let!(:answer) { create(:answer, :with_files, question:, user: author) }
 
   describe 'Authenticated user', :js do
     before do
@@ -26,6 +26,17 @@ I would like to edit my answer
         expect(page).not_to have_content answer.body
         expect(page).to have_content 'Edited answer'
         expect(page).not_to have_selector 'textarea'
+      end
+    end
+
+    scenario 'can attach file during answer update' do
+      within '.answers' do
+        click_on 'Edit answer'
+        attach_file 'File', %W[#{Rails.root}/spec/spec_helper.rb]
+        click_on 'Save'
+        sleep 1
+
+        expect(answer.files.count).to eq(3)
       end
     end
 
@@ -50,10 +61,20 @@ I would like to edit my answer
     end
   end
 
-  scenario 'unauthorized user cannot edit answer' do
-    sleep 1
-    visit question_path(question)
+  describe 'Unauthorized user' do
+    before do
+      sleep 1
+      visit question_path(question)
+    end
 
-    expect(page).not_to have_link 'Edit answer'
+    scenario 'can see question answer' do
+      within '.answers' do
+        expect(page).to have_content answer.body
+      end
+    end
+
+    scenario 'cannot edit answer' do
+      expect(page).not_to have_link 'Edit answer'
+    end
   end
 end

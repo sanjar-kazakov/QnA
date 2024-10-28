@@ -7,7 +7,7 @@ I would like to edit my question
 ' do
   let(:author) { create :user }
   let(:user) { create :user }
-  let!(:question) { create(:question, user: author) }
+  let!(:question) { create(:question, :with_files, user: author) }
 
   describe 'Authenticated user', :js do
     before do
@@ -29,6 +29,17 @@ I would like to edit my question
         expect(page).to have_content 'Edited title'
         expect(page).to have_content 'Edited body'
         expect(page).not_to have_selector 'textarea'
+      end
+    end
+
+    scenario 'can attach file during question update' do
+      within '.question' do
+        click_on 'Edit'
+        attach_file 'File', %W[#{Rails.root}/spec/spec_helper.rb]
+        click_on 'Save'
+        sleep 1
+
+        expect(question.files.count).to eq(3)
       end
     end
 
