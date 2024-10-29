@@ -40,6 +40,17 @@ I would like to edit my answer
       end
     end
 
+    scenario 'can delete his answer\'s file' do
+      within '.answers' do
+        click_on 'Edit answer'
+        click_on 'Remove file'
+        click_on 'Save'
+        sleep 1
+
+        expect(answer.files.count).to eq(1)
+      end
+    end
+
     scenario 'gets error when trying to save an empty answer' do
       within '.answers' do
         click_on 'Edit answer'
