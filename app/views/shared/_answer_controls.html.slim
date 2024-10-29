@@ -12,12 +12,9 @@
     p
       = form.label :body, 'Your answer'
       = form.text_area :body
-
     - answer.files.each do |file|
       = hidden_field_tag 'answer[files][]', file.signed_id
-      / p
-      /   = file.filename
-      /   = button_to "Remove file"
+
     p
       = form.label :files
       = form.file_field :files, multiple: true
