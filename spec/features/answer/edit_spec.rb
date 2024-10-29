@@ -42,9 +42,8 @@ I would like to edit my answer
 
     scenario 'can delete his answer\'s file' do
       within '.answers' do
-        click_on 'Edit answer'
-        click_on 'Remove file'
-        click_on 'Save'
+        first(:button, 'Remove file').click
+        page.accept_alert 'Are you sure?'
         sleep 1
 
         expect(answer.files.count).to eq(1)

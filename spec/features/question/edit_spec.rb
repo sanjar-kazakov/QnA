@@ -43,6 +43,16 @@ I would like to edit my question
       end
     end
 
+    scenario 'can delete his question\'s file' do
+      within '.question' do
+        first(:button, 'Remove file').click
+        page.accept_alert 'Are you sure?'
+        sleep 1
+
+        expect(question.files.count).to eq(1)
+      end
+    end
+
     scenario 'gets errors while updating his question' do
       within '.question' do
         click_on 'Edit'
