@@ -1,17 +1,17 @@
-= form_with(model: question, local: true, data: { turbo: false }) do |f|
+= form_with(model: question, local: true, data: { turbo: false }) do |form|
   .question-errors
     = render 'shared/errors', resource: question
   .field
     p
-      = f.label :title, 'Title'
-      = f.text_field :title
+      = form.label :title, 'Title'
+      = form.text_field :title
     p
-      = f.label :body, 'Body'
-      = f.text_area :body
+      = form.label :body, 'Body'
+      = form.text_area :body
     p
-      = f.label :files
-      = f.file_field :files, multiple: true
+      = form.label :files
+      = form.file_field :files, multiple: true
   .actions
     p
-      = f.submit 'Ask'
+      = form.submit 'Ask'
 
