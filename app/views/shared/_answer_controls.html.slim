@@ -9,7 +9,14 @@
   .answer-errors
     = render 'shared/errors', resource: answer
   .field
-    = form.label :body, 'Your answer'
-    = form.text_area :body
+    p
+      = form.label :body, 'Your answer'
+      = form.text_area :body
+    - answer.files.each do |file|
+      = hidden_field_tag 'answer[files][]', file.signed_id
+
+    p
+      = form.label :files
+      = form.file_field :files, multiple: true
   .actions
     = form.submit 'Save'

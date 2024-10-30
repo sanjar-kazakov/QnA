@@ -26,6 +26,17 @@ feature 'User can create an answer', '
       end
     end
 
+    scenario 'can add files to his answer while answering to the question', :js do
+      fill_in 'Body', with: 'Test question'
+      attach_file 'File', %W[#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb]
+      click_on 'Answer'
+
+      within '.answers' do
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+    end
+
     scenario 'creates an answer with errors', :js do
       click_on 'Answer'
 

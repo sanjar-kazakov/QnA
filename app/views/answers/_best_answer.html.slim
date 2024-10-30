@@ -10,5 +10,21 @@
       = best_answer.created_at.strftime("%Y-%m-%d %H:%M")
     p
       = best_answer.body
+    p
+    - if best_answer.files.attached?
+      - best_answer.files.each do |file|
+        div id="file_container_#{file.id}" class="file-container"
+          - if file.representable?
+            = link_to url_for(file) do
+              = image_tag file.representation(resize_to_limit: [50, 50]).processed
+          - else
+            p= link_to file.filename.to_s, url_for(file)
+
+          - if is_author?(current_user, best_answer)
+            = button_to "Remove file",
+                    attachment_path(file),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' },
+                    remote: true
 
     = render 'shared/answer_controls', answer: best_answer, question: @question, best_answer: @best_answer

@@ -23,4 +23,10 @@ RSpec.describe Question, type: :model do
       expect(question).to be_invalid
     end
   end
+
+  describe 'storage' do
+    it 'has many attachments' do
+      expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+    end
+  end
 end

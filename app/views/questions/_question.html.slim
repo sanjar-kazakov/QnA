@@ -2,17 +2,43 @@
   h1= question.title
   p= question.body
 
-  - if user_signed_in? && current_user == question.user
+  - if question.files.attached?
+    - question.files.each do |file|
+      div id="file_container_#{file.id}" class="file-container"
+        - if file.representable?
+          = link_to url_for(file) do
+            = image_tag file.representation(resize_to_limit: [50, 50]).processed
+        - else
+          p= link_to file.filename.to_s, url_for(file)
+
+        - if is_author?(current_user, question)
+          = button_to "Remove file",
+                  attachment_path(file),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' },
+                  remote: true
+  p
+  - if is_author?(current_user, question)
     = button_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     = button_to 'Delete', question_path(question), method: :delete
 
-  = form_with model: @question, local: false, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
+  = form_with model: question, local: false, class: 'hidden edit-question-form', html: { id: "edit-question-#{question.id}" } do |form|
     .question-errors
-      = render 'shared/errors', resource: @question
+      = render 'shared/errors', resource: question
+
     .field
-      = f.label :title, 'Title'
-      = f.text_field :title
-      = f.label :body, 'Body'
-      = f.text_area :body
+      p
+        = form.label :title, 'Title'
+        = form.text_field :title
+      p
+        = form.label :body, 'Body'
+        = form.text_area :body
+      - question.files.each do |file|
+        = hidden_field_tag 'question[files][]', file.signed_id
+
+      p
+        = form.label :files
+        = form.file_field :files, multiple: true
+
     .actions
-      = f.submit 'Save'
+      = form.submit 'Save'

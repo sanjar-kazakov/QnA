@@ -14,7 +14,7 @@ I want to be able to ask a questions
       click_on 'New Question'
     end
 
-    scenario 'can create a question' do
+    scenario 'can ask a question' do
       fill_in 'Title', with: 'Question'
       fill_in 'Body', with: 'Lorem ipsum dolor sit amet'
       click_on 'Ask'
@@ -24,14 +24,25 @@ I want to be able to ask a questions
       expect(page).to have_content('Lorem ipsum dolor sit amet')
     end
 
-    scenario 'creates a question with errors' do
+    scenario 'asks a question with errors' do
       click_on 'Ask'
 
       expect(page).to have_content('Title can\'t be blank')
     end
+
+    scenario 'asks a question with attached file' do
+      fill_in 'Title', with: 'Question'
+      fill_in 'Body', with: 'Lorem ipsum dolor sit amet'
+
+      attach_file 'File', %W[#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb]
+      click_on 'Ask'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
   end
 
-  scenario 'Non-authenticated user cannot create a question' do
+  scenario 'Non-authenticated user cannot ask a question' do
     visit questions_path
     click_on 'New Question'
 
