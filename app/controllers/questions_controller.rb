@@ -19,6 +19,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @answer.links.build
     @best_answer = @question.best_answer
     @best_answer = nil if @best_answer&.discarded_at.present?
     @other_answers = @question.answers.where.not(id: @best_answer).kept
@@ -26,6 +27,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+    @question.links.build # or @question.links.new
   end
 
   def edit; end
@@ -46,6 +48,8 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(:title, :body,
+                                     files: [],
+                                     links_attributes: %i[name url])
   end
 end

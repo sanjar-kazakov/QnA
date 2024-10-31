@@ -17,6 +17,13 @@
                   method: :delete,
                   data: { confirm: 'Are you sure?' },
                   remote: true
+
+  .links
+    p Links:
+    ul
+      - question.links.each do |link|
+        li= link_to link.name, link.url
+
   p
   - if is_author?(current_user, question)
     = button_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }

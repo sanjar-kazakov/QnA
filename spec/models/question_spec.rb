@@ -10,6 +10,11 @@ RSpec.describe Question, type: :model do
 
       expect(question.answers.count).to eq(2)
     end
+
+    it 'has many links' do
+      create_list(:link, 2, linkable: question)
+      expect(question.links.count).to eq(2)
+    end
   end
 
   describe 'validations' do
@@ -27,6 +32,17 @@ RSpec.describe Question, type: :model do
   describe 'storage' do
     it 'has many attachments' do
       expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+    end
+  end
+
+  describe 'nested attributes' do
+    it 'accepts nested attributes for links' do
+      link_attributes = [{ name: 'Example link', url: 'http://example.com' }]
+      question_with_links = described_class.new(title: 'Test title', body: 'Test body', user:, links_attributes: link_attributes)
+
+      expect(question_with_links.links.size).to eq(1)
+      expect(question_with_links.links.first.name).to eq('Example link')
+      expect(question_with_links.links.first.url).to eq('http://example.com')
     end
   end
 end
