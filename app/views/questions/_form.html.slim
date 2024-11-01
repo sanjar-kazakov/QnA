@@ -13,15 +13,11 @@
       = form.file_field :files, multiple: true
 
     p Links:
-    p
-      = form.fields_for :links do |l|
-        = l.label :name, 'Link name'
-        = l.text_field :name
-
-        = l.label :url, 'Url'
-        = l.text_field :url
+    = form.fields_for :links do |l|
+      = render 'link_fields', f: l
+    .links
+      = link_to_add_association 'Add link', form, :links
 
   .actions
     p
       = form.submit 'Ask'
-

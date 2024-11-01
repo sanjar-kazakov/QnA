@@ -19,10 +19,11 @@
                   remote: true
 
   .links
-    p Links:
-    ul
-      - question.links.each do |link|
-        li= link_to link.name, link.url
+    - if question.links.any?
+      p Links:
+      ul
+        - question.links.each do |link|
+          li= link_to link.name, link.url
 
   p
   - if is_author?(current_user, question)
@@ -46,6 +47,12 @@
       p
         = form.label :files
         = form.file_field :files, multiple: true
+
+      p Links:
+      = form.fields_for :links do |l|
+        = render 'link_fields', f: l
+      .links
+        = link_to_add_association 'Add link', form, :links
 
     .actions
       = form.submit 'Save'

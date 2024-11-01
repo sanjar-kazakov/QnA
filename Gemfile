@@ -51,6 +51,7 @@ gem 'image_processing', '~> 1.2'
 gem 'devise'
 gem 'jquery-rails'
 gem 'slim-rails'
+gem 'cocoon'
 
 gem 'aws-sdk-s3', require: false
 

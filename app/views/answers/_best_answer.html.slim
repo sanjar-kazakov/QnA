@@ -27,9 +27,10 @@
                     data: { confirm: 'Are you sure?' },
                     remote: true
     .links
-      p Links:
-      ul
-        - best_answer.links.each do |link|
-          li= link_to link.name, link.url
+      - if best_answer.links.any?
+        p Links:
+        ul
+          - best_answer.links.each do |link|
+            li= link_to link.name, link.url
 
     = render 'shared/answer_controls', answer: best_answer, question: @question, best_answer: @best_answer

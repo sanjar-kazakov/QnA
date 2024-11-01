@@ -6,4 +6,5 @@ import "controllers";
 import "jquery";
 import "./answer";
 import "./question";
+import "@nathanvda/cocoon"
 // import "twitter/bootstrap";
