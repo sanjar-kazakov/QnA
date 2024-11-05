@@ -17,13 +17,16 @@
                   method: :delete,
                   data: { confirm: 'Are you sure?' },
                   remote: true
-
   .links
     - if question.links.any?
       p Links:
       ul
         - question.links.each do |link|
-          li= link_to link.name, link.url
+          - if link.url.include?("gist.github.com")
+            - gist_id = link.url.split('/').last # Извлекаем gist_id из URL
+            li= link_to link.name, link.url, class: 'gist-link', data: { gist_id: gist_id }
+          - else
+            li= link_to link.name, link.url
 
   p
   - if is_author?(current_user, question)
@@ -51,9 +54,6 @@
       - if question.links.any?
         p Links:
         = form.fields_for :links do |l|
-          = render 'link_fields', f: l
-      - else
-        = form.fields_for :links, question.links.build do |l|
           = render 'link_fields', f: l
       .links
         = link_to_add_association 'Add link', form, :links

@@ -19,9 +19,10 @@
       = form.label :files
       = form.file_field :files, multiple: true
 
-    p Links:
-    = form.fields_for :links do |l|
-      = render 'link_fields', f: l
+    - if answer.links.any?
+      p Links:
+      = form.fields_for :links do |l|
+        = render 'link_fields', f: l
     .links
       = link_to_add_association 'Add link', form, :links
 

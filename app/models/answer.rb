@@ -7,7 +7,6 @@ class Answer < ApplicationRecord
   has_many_attached :files
   accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
 
-
   validates :body, presence: true
 
   scope :kept, -> { where(discarded_at: nil) }
