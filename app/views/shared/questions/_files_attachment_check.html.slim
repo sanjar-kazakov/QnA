@@ -1,0 +1,15 @@
+- if question.files.attached?
+  - question.files.each do |file|
+    div id="file_container_#{file.id}" class="file-container"
+      - if file.representable?
+        = link_to url_for(file) do
+          = image_tag file.variant(resize_to_limit: [50, 50])
+      - else
+        p= link_to file.filename.to_s, url_for(file)
+
+      - if is_author?(current_user, question)
+        = button_to "Remove file",
+                attachment_path(file),
+                method: :delete,
+                data: { confirm: 'Are you sure?' },
+                remote: true
