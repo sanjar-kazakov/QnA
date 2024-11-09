@@ -10,6 +10,5 @@ html
     = javascript_importmap_tags
   body
     = render 'shared/nav'
-    p.notice = notice
-    p.alert = alert
+    = render 'shared/flashes'
     = yield

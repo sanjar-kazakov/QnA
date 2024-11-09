@@ -7,13 +7,26 @@
       div id="file_container_#{file.id}" class="file-container"
         - if file.representable?
           = link_to url_for(file) do
-            = image_tag file.representation(resize_to_limit: [50, 50]).processed
+            = image_tag file.variant(resize_to_limit: [50, 50])
         - else
           p= link_to file.filename.to_s, url_for(file)
 
         - if is_author?(current_user, question)
           = button_to "Remove file",
                   attachment_path(file),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' },
+                  remote: true
+  .badge
+    - if is_author?(current_user, question)
+      - if badge&.badge_image&.attached?
+        div id="badge_container_#{badge.id}"
+          p Badge:
+          = link_to url_for(badge.badge_image) do
+            p= badge.name
+            p= image_tag badge.badge_image.variant(resize_to_limit: [50, 50])
+          = button_to "Remove badge",
+                  badge_path(badge.id),
                   method: :delete,
                   data: { confirm: 'Are you sure?' },
                   remote: true

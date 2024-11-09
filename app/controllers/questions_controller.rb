@@ -12,7 +12,6 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question, notice: 'Your question has been created'
     else
-      puts @question.errors.full_messages
       render :new
     end
   end
@@ -23,10 +22,12 @@ class QuestionsController < ApplicationController
     @best_answer = @question.best_answer
     @best_answer = nil if @best_answer&.discarded_at.present?
     @other_answers = @question.answers.where.not(id: @best_answer).kept
+    @badge = @question.badge
   end
 
   def new
     @question = Question.new
+    @question.build_badge
     @question.links.build # or @question.links.new
   end
 
@@ -48,8 +49,12 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body,
-                                     files: [],
-                                     links_attributes: %i[id name url _destroy])
+    params.require(:question).permit(
+      :title,
+      :body,
+      files: [],
+      links_attributes: %i[id name url _destroy],
+      badge_attributes: %i[id name badge_image _destroy]
+    )
   end
 end
