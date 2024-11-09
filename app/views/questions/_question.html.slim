@@ -60,9 +60,20 @@
       - question.files.each do |file|
         = hidden_field_tag 'question[files][]', file.signed_id
 
-      p
+      .file_fields
+        p File:
         = form.label :files
         = form.file_field :files, multiple: true
+
+      .badge_fields
+        p Badge:
+        = form.fields_for :badge, question.badge || question.build_badge do |badge_form|
+          p
+            = badge_form.label :name, 'Badge Name'
+            = badge_form.text_field :name
+          p
+            = badge_form.label :badge_image, 'Upload Badge'
+            = badge_form.file_field :badge_image
 
       - if question.links.any?
         p Links:

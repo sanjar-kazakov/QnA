@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[show edit update destroy]
+  before_action :find_question, only: %i[show edit update destroy]
 
   def index
     @questions = Question.kept
@@ -31,7 +31,10 @@ class QuestionsController < ApplicationController
     @question.links.build # or @question.links.new
   end
 
-  def edit; end
+  def edit
+    @question.build_badge unless @question.badge
+    @badge = @question.badge
+  end
 
   def update
     @question.update(question_params) if current_user.is_author?(@question)
@@ -44,7 +47,7 @@ class QuestionsController < ApplicationController
 
   private
 
-  def set_question
+  def find_question
     @question = Question.with_attached_files.includes(:links).find(params[:id])
   end
 
@@ -56,5 +59,9 @@ class QuestionsController < ApplicationController
       links_attributes: %i[id name url _destroy],
       badge_attributes: %i[id name badge_image _destroy]
     )
+  end
+
+  def set_question
+
   end
 end

@@ -33,4 +33,4 @@
           - best_answer.links.each do |link|
             li= link_to link.name, link.url, class: 'gist-link'
 
-    = render 'shared/answer_controls', answer: best_answer, question: @question, best_answer: @best_answer
+    = render 'shared/answers/answer_controls', answer: best_answer, question: @question, best_answer: @best_answer
