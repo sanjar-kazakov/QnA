@@ -1,0 +1,18 @@
+p = link_to t('All questions'), questions_path, class: 'btn btn-primary'
+
+- if @badges.any?
+  table.table.table-hover.table-bordered
+    thead
+      tr.text-center
+        th = t('.title')
+        th = t('.body')
+        th = t('.actions')
+
+    tbody
+      - @badges.each do |badge|
+        tr
+          td style="text-align: center;" = link_to url_for(badge.badge_image)
+          td style="text-align: center;" = badge.name
+          td style="text-align: center;" = link_to t('.show')
+- else
+  p = 'No questions asked yet.'

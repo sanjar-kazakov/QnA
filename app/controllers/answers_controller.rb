@@ -36,6 +36,8 @@ class AnswersController < ApplicationController
     @answer.mark_as_best
 
     set_answers_data
+
+    @best_answer.user.badges.push(@question.badge)
   end
 
   private
