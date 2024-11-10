@@ -44,5 +44,13 @@ RSpec.describe Question, type: :model do
       expect(question_with_links.links.first.name).to eq('Example link')
       expect(question_with_links.links.first.url).to eq('http://example.com')
     end
+
+    it 'accepts nested attributes for badge' do
+      badge_attributes = { name: 'Sample Badge' }
+      question = described_class.new(title: 'Test title', body: 'Test body', user:, badge_attributes: badge_attributes)
+
+      expect(question.badge).not_to be_nil
+      expect(question.badge.name).to eq('Sample Badge')
+      end
   end
 end

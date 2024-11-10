@@ -40,6 +40,19 @@ I want to be able to ask a questions
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    scenario 'asks a question with attached badge' do
+      fill_in 'Title', with: 'Question'
+      fill_in 'Body', with: 'Lorem ipsum dolor sit amet'
+
+      fill_in 'Badge Name', with: 'Badge name'
+      attach_file 'Upload Badge', "#{Rails.root}/spec/fixtures/files/download.jpeg"
+
+      click_on 'Ask'
+
+      expect(page).to have_content 'Badge name'
+      expect(page).to have_link 'Badge name'
+    end
   end
 
   scenario 'Non-authenticated user cannot ask a question' do

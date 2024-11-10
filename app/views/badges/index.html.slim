@@ -1,18 +1,21 @@
-p = link_to t('All questions'), questions_path, class: 'btn btn-primary'
+p= link_to t('All questions'), questions_path, class: 'btn-all-questions'
 
 - if @badges.any?
-  table.table.table-hover.table-bordered
+  table.badges-table
     thead
-      tr.text-center
-        th = t('.title')
-        th = t('.body')
-        th = t('.actions')
-
+      tr
+        th= t('.Badge')
+        th= t('.Name')
+        th= t('.Question')
     tbody
       - @badges.each do |badge|
         tr
-          td style="text-align: center;" = link_to url_for(badge.badge_image)
-          td style="text-align: center;" = badge.name
-          td style="text-align: center;" = link_to t('.show')
+          td.badge-image
+            = link_to url_for(badge.badge_image) do
+              = image_tag badge.badge_image.variant(resize_to_limit: [50, 50])
+          td.badge-name= badge.name
+          td.badge-question= badge.question.title
 - else
-  p = 'No questions asked yet.'
+  p Нет доступных бейджей.
+
+= link_to 'Back', (request.referer || questions_path), class: "btn btn-primary"

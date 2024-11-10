@@ -37,7 +37,7 @@ class AnswersController < ApplicationController
 
     set_answers_data
 
-    @best_answer.user.badges.push(@question.badge)
+    @best_answer.user.badges.push(@question.badge) if @question.badge
   end
 
   private

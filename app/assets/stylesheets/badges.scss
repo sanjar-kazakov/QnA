@@ -1,0 +1,50 @@
+.btn-all-questions {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.btn-all-questions:hover {
+  background-color: #45a049;
+}
+
+.badges-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.badges-table thead {
+  background-color: #f2f2f2;
+}
+
+.badges-table th, .badges-table td {
+  text-align: center;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.badges-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.badges-table tr:hover {
+  background-color: #ddd;
+}
+
+.badge-image img {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.badge-name {
+  font-weight: bold;
+}
+
+.badge-question {
+  color: #555;
+}

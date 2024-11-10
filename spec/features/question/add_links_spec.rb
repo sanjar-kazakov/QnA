@@ -16,6 +16,8 @@ I want to be able to add links to question
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'Lorem ipsum dolor sit amet'
 
+    click_on 'Add link'
+
     fill_in 'Link name', with: 'My Link'
     fill_in 'Url', with: gist_url
 
