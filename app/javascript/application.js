@@ -6,6 +6,6 @@ import "controllers";
 import "jquery";
 import "./answer";
 import "./question";
-import "../gist_link";
+import "./gist_link";
 import "@nathanvda/cocoon"
 // import "twitter/bootstrap";
