@@ -17,5 +17,10 @@ class Answer < ApplicationRecord
 
   def mark_as_best
     question.update(best_answer_id: id)
+    award_badge_to_user
+  end
+
+  def award_badge_to_user
+    user.badges << question.badge
   end
 end
