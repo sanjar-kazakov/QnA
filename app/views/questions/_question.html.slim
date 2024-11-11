@@ -2,12 +2,12 @@
   h1= question.title
   p= question.body
 
-  = render 'shared/questions/files_attachment_check', question: question
+  = render 'shared/files_attachment', resource: question
 
   - if is_author?(current_user, question)
-    = render 'shared/questions/badge_attachment_check', badge: badge
+    = render 'shared/questions/badge_attachment', badge: badge
 
-  = render 'shared/questions/links_attachment_check', question: question
+  = render 'shared/links_attachment', resource: question
 
   p
   - if is_author?(current_user, question)

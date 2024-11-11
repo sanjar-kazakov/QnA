@@ -24,14 +24,14 @@ RSpec.describe Answer, type: :model do
 
   describe 'storage' do
     it 'has many attachments' do
-      expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+      expect(described_class.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
     end
   end
 
   describe 'nested attributes' do
     it 'accepts nested attributes for links' do
       link_attributes = [{ name: 'Example link', url: 'http://example.com' }]
-      answer_with_links = described_class.new( body: 'Test body', links_attributes: link_attributes)
+      answer_with_links = described_class.new(body: 'Test body', links_attributes: link_attributes)
 
       expect(answer_with_links.links.size).to eq(1)
       expect(answer_with_links.links.first.name).to eq('Example link')

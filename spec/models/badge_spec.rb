@@ -24,9 +24,7 @@ RSpec.describe Badge, type: :model do
 
   describe 'storage' do
     it 'has an attachment' do
-      expect(Badge.new.badge_image).to be_an_instance_of(ActiveStorage::Attached::One)
+      expect(described_class.new.badge_image).to be_an_instance_of(ActiveStorage::Attached::One)
     end
   end
-
-
 end

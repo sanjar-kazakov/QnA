@@ -1,5 +1,5 @@
-- if question.files.attached?
-  - question.files.each do |file|
+- if resource.files.attached?
+  - resource.files.each do |file|
     div id="file_container_#{file.id}" class="file-container"
       - if file.representable?
         = link_to url_for(file) do
@@ -7,7 +7,7 @@
       - else
         p= link_to file.filename.to_s, url_for(file)
 
-      - if is_author?(current_user, question)
+      - if is_author?(current_user, resource)
         = button_to "Remove file",
                 attachment_path(file),
                 method: :delete,

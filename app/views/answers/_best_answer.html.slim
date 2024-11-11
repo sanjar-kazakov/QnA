@@ -11,8 +11,8 @@
     p
       = best_answer.body
     p
-      = render 'shared/answers/answer_attachment_check', resource: best_answer
+      = render 'shared/files_attachment', resource: best_answer
 
-    = render 'shared/answers/links_attachment_check', resource: best_answer
+    = render 'shared/links_attachment', resource: best_answer
 
     = render 'shared/answers/answer_controls', answer: best_answer, question: @question, best_answer: @best_answer

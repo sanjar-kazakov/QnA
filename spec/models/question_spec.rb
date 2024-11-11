@@ -31,7 +31,7 @@ RSpec.describe Question, type: :model do
 
   describe 'storage' do
     it 'has many attachments' do
-      expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+      expect(described_class.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
     end
   end
 
@@ -51,6 +51,6 @@ RSpec.describe Question, type: :model do
 
       expect(question.badge).not_to be_nil
       expect(question.badge.name).to eq('Sample Badge')
-      end
+    end
   end
 end
