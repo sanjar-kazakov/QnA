@@ -10,6 +10,11 @@ h3 Write an Answer:
     p
       = form.label :files
       = form.file_field :files, multiple: true
+
+    p
+    .links
+      = link_to_add_association 'Add link', form, :links
+
   .actions
     p
       = form.submit 'Answer'

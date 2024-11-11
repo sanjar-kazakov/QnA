@@ -1,0 +1,12 @@
+.badge
+  - if badge&.badge_image&.attached?
+    div id="badge_container_#{badge.id}"
+      p Badge:
+      = link_to url_for(badge.badge_image) do
+        p= badge.name
+        p= image_tag badge.badge_image.variant(resize_to_limit: [50, 50])
+      = button_to "Remove badge",
+              badge_path(badge.id),
+              method: :delete,
+              data: { confirm: 'Are you sure?' },
+              remote: true

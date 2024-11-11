@@ -8,10 +8,25 @@
     p
       = form.label :body, 'Body'
       = form.text_area :body
-    p
+
+    .file_fields
+      p File:
       = form.label :files
       = form.file_field :files, multiple: true
+
+    .badge_fields
+      p Badge:
+      = form.fields_for :badge do |badge_form|
+        p
+          = badge_form.label :name, 'Badge Name'
+          = badge_form.text_field :name
+        p
+          = badge_form.label :badge_image, 'Upload Badge'
+          = badge_form.file_field :badge_image
+
+    .links
+      = link_to_add_association 'Add link', form, :links
+
   .actions
     p
       = form.submit 'Ask'
-

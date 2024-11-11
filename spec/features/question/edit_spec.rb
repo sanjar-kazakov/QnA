@@ -8,6 +8,7 @@ I would like to edit my question
   let(:author) { create :user }
   let(:user) { create :user }
   let!(:question) { create(:question, :with_files, user: author) }
+  let(:question_with_badge) { create(:question, user: author) }
 
   describe 'Authenticated user', :js do
     before do
@@ -41,6 +42,20 @@ I would like to edit my question
 
         expect(question.files.count).to eq(3)
       end
+    end
+
+    scenario 'can attach badge during question update' do
+      within '.question' do
+        click_on 'Edit'
+
+        fill_in 'Badge Name', with: 'Badge name'
+        attach_file 'Upload Badge', "#{Rails.root}/spec/fixtures/files/download.jpeg"
+
+        click_on 'Save'
+      end
+
+      expect(page).to have_content 'Badge name'
+      expect(page).to have_css("img[src*='download.jpeg']")
     end
 
     scenario 'can delete his question\'s file' do

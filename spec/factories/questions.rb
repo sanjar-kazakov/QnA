@@ -22,5 +22,15 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :with_badge do
+      after(:build) do |question|
+        question.badge.attach(
+          io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'download.jpeg')),
+          filename: 'download.jpeg',
+          content_type: 'jpeg'
+        )
+      end
+    end
   end
 end

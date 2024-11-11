@@ -9,6 +9,7 @@ class AnswersController < ApplicationController
 
   def new
     @answer = @question.answers.new
+    @answer.links.build # or @answer.links.new
   end
 
   def show; end
@@ -54,6 +55,8 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, files: [])
+    params.require(:answer).permit(:body,
+                                   files: [],
+                                   links_attributes: %i[id name url _destroy])
   end
 end

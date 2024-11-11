@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[show edit update destroy]
+  before_action :find_question, only: %i[show edit update destroy]
 
   def index
     @questions = Question.kept
@@ -12,20 +12,23 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question, notice: 'Your question has been created'
     else
-      puts @question.errors.full_messages
       render :new
     end
   end
 
   def show
     @answer = Answer.new
+    @answer.links.build
     @best_answer = @question.best_answer
     @best_answer = nil if @best_answer&.discarded_at.present?
     @other_answers = @question.answers.where.not(id: @best_answer).kept
+    @badge = @question.badge
   end
 
   def new
     @question = Question.new
+    @question.build_badge
+    @question.links.build # or @question.links.new
   end
 
   def edit; end
@@ -41,11 +44,17 @@ class QuestionsController < ApplicationController
 
   private
 
-  def set_question
-    @question = Question.with_attached_files.find(params[:id])
+  def find_question
+    @question = Question.with_attached_files.includes(:links).find(params[:id])
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(
+      :title,
+      :body,
+      files: [],
+      links_attributes: %i[id name url _destroy],
+      badge_attributes: %i[id name badge_image _destroy]
+    )
   end
 end

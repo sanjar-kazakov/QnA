@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "@hotwired/turbo-rails": "^8.0.10",
+    "@nathanvda/cocoon": "^1.2.14",
     "@rails/ujs": "^7.1.3-4",
+    "gist-client": "^1.1.1",
     "jquery": "^3.7.1"
   },
   "devDependencies": {

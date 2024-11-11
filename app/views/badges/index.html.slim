@@ -1,0 +1,21 @@
+p= link_to t('All questions'), questions_path, class: 'btn-all-questions'
+
+- if @badges.any?
+  table.badges-table
+    thead
+      tr
+        th= t('.Badge')
+        th= t('.Name')
+        th= t('.Question')
+    tbody
+      - @badges.each do |badge|
+        tr
+          td.badge-image
+            = link_to url_for(badge.badge_image) do
+              = image_tag badge.badge_image.variant(resize_to_limit: [50, 50])
+          td.badge-name= badge.name
+          td.badge-question= badge.question.title
+- else
+  p Нет доступных бейджей.
+
+= link_to 'Back', (request.referer || questions_path), class: "btn btn-primary"

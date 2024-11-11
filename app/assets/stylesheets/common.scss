@@ -1,5 +1,22 @@
 .hidden { display: none }
 
+.flash_notice, .flash_alert {
+  display: none;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.flash_notice {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.flash_alert {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
 .best-answer {
   background-color: #e7f0fa;
   border: 2px solid #a5a296;
