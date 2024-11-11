@@ -20,6 +20,8 @@ class Answer < ApplicationRecord
     award_badge_to_user
   end
 
+  private
+
   def award_badge_to_user
     user.badges << question.badge
   end
