@@ -7,5 +7,6 @@ import "jquery";
 import "./answer";
 import "./question";
 import "./gist_link";
+import "./votes";
 import "@nathanvda/cocoon"
 // import "twitter/bootstrap";

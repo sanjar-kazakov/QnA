@@ -1,6 +1,9 @@
-.question
+.div class="question" data-question-id=question.id
   h1= question.title
   p= question.body
+  p
+    | Rating:
+  = render "shared/votes", resource: question
 
   = render 'shared/files_attachment', resource: question
 
