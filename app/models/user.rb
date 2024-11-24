@@ -7,8 +7,9 @@ class User < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_many :answers
   has_many :badges
+  has_many :votes
 
-  def is_author?(resource)
-    self.id == resource.user_id
+  def author?(resource)
+    id == resource.user_id # self.id == ... то же самое
   end
 end

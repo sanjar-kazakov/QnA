@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
-  let(:question) { create(:question) }
   let(:answer) { create(:answer, question:) }
+  let(:question) { create(:question) }
+
+  it_behaves_like 'votable'
 
   describe 'associations' do
     it 'belongs to a question' do

@@ -17,17 +17,17 @@ feature 'User can create an answer', '
     end
 
     scenario 'can answer to the question', :js do
-      fill_in 'Body', with: 'Test question'
+      fill_in 'Body', with: 'Test answer'
       click_on 'Answer'
 
       # expect(page).to have_content 'Your answer has been submitted'
       within '.answers' do
-        expect(page).to have_content 'Test question'
+        expect(page).to have_content 'Test answer'
       end
     end
 
     scenario 'can add files to his answer while answering to the question', :js do
-      fill_in 'Body', with: 'Test question'
+      fill_in 'Body', with: 'Test answer'
       attach_file 'File', %W[#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb]
       click_on 'Answer'
 

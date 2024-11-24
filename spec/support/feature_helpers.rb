@@ -14,8 +14,8 @@ module FeatureHelpers
   def fill_in_credentials(creds, password_confirmation: false)
     fill_in 'Email', with: creds.email
     fill_in 'Password', with: creds.password
-    if password_confirmation && page.has_field?('Password confirmation')
-      fill_in 'Password confirmation', with: creds.password
-    end
+    return unless password_confirmation && page.has_field?('Password confirmation')
+
+    fill_in 'Password confirmation', with: creds.password
   end
 end

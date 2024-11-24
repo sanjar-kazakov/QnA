@@ -7,13 +7,13 @@
 
   = render 'shared/files_attachment', resource: question
 
-  - if is_author?(current_user, question)
+  - if author?(current_user, question)
     = render 'shared/questions/badge_attachment', badge: badge
 
   = render 'shared/links_attachment', resource: question
 
   p
-  - if is_author?(current_user, question)
+  - if author?(current_user, question)
     = button_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     = button_to 'Delete', question_path(question), method: :delete
 

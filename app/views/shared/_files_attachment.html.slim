@@ -7,7 +7,7 @@
       - else
         p= link_to file.filename.to_s, url_for(file)
 
-      - if is_author?(current_user, resource)
+      - if author?(current_user, resource)
         = button_to "Remove file",
                 attachment_path(file),
                 method: :delete,

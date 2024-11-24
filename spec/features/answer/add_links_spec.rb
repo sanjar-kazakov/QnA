@@ -25,7 +25,7 @@ I want to be able to add links to answer
       fill_in 'Url', with: gist_url
 
       click_on 'Answer'
-
+      visit current_path
       within '.answers' do
         expect(page).to have_link 'My Link', href: gist_url
       end

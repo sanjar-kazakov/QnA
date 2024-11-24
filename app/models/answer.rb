@@ -25,6 +25,8 @@ class Answer < ApplicationRecord
   private
 
   def award_badge_to_user
+    return unless question.badge
+
     user.badges << question.badge
   end
 end

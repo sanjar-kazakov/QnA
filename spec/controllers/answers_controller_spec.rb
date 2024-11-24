@@ -59,27 +59,29 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           post :create, params: {
             question_id: question,
-            answer: attributes_for(:answer).merge(user_id: user.id), format: :js
+            answer: attributes_for(:answer).merge(user_id: user.id), format: :json
           }
         end.to change(Answer, :count).by(1)
       end
 
       it 'redirects to the created answer' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js }
-        expect(response).to render_template :create
+        post :create, params: { question_id: question, answer: attributes_for(:answer), format: :json }
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
+        expect(response).to have_http_status(:success)
       end
     end
 
     context 'with invalid params' do
       it 'does not save the answer to the database' do
         expect do
-          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
+          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :json }
         end.not_to change(Answer, :count)
       end
 
       it 're-renders the create template' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
-        expect(response).to render_template :create
+        post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :json }
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end

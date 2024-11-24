@@ -5,6 +5,8 @@ AllCops:
   Exclude:
     - "bin/*"
     - "config/initializers/*"
+    - "db/migrate/20241025140309_create_active_storage_tables.active_storage.rb"
+    - "db/migrate/20241025140309_create_active_storage_tables.active_storage.rb"
 
 Metrics/MethodLength:
   Max: 15
@@ -21,6 +23,17 @@ Style/Documentation:
 Metrics/BlockLength:
   Exclude:
     - "spec/**/*"
+    - "db/schema.rb"
 
 RSpec/SpecFilePathFormat:
   Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+Style/NumericLiterals:
+  Exclude:
+    - "db/schema.rb"

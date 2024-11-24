@@ -18,27 +18,23 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
 
-    respond_to do |format|
-      if @answer.save
-        format.json { render json: @answer }
-      else
-        format.json do
-          render json: @answer.errors.full_messages, status: :unprocessable_entity
-        end
-      end
+    if @answer.save
+      render_success_message(@answer)
+    else
+      render_error_message(@answer)
     end
   end
 
   def edit; end
 
   def update
-    @answer.update(answer_params) if current_user.is_author?(@answer)
+    @answer.update(answer_params) if current_user.author?(@answer)
 
     set_answers_data
   end
 
   def destroy
-    @answer.soft_delete if current_user.is_author?(@answer)
+    @answer.soft_delete if current_user.author?(@answer)
   end
 
   def mark_as_best
@@ -67,5 +63,24 @@ class AnswersController < ApplicationController
     params.require(:answer).permit(:body,
                                    files: [],
                                    links_attributes: %i[id name url _destroy])
+  end
+
+  def render_success_message(answer)
+    attachments = format_attachments(answer.files)
+
+    render json: { id: answer.id, body: answer.body, attachments: }, status: :created
+  end
+
+  def render_error_message(answer)
+    render json: answer.errors.full_messages, status: :unprocessable_entity
+  end
+
+  def format_attachments(files)
+    files.map do |file|
+      {
+        url: url_for(file),
+        filename: file.filename.to_s
+      }
+    end
   end
 end

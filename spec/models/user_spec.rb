@@ -26,13 +26,13 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'is_author?' do
+  describe 'author?' do
     it 'is true' do
-      expect(user.is_author?(question)).to be true
+      expect(user.author?(question)).to be true
     end
 
     it 'is false' do
-      expect(user.is_author?(answer)).to be false
+      expect(user.author?(answer)).to be false
     end
   end
 end

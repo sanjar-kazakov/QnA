@@ -1,6 +1,6 @@
 h3 Write an Answer:
 
-= form_with(model: [question, answer], remote: true, data: { type: :json }, class: 'new-answer') do |form|
+= form_with(model: [question, answer], local: false, remote: true, data: { type: :json }, class: 'new-answer') do |form|
   .answer-errors
     = render 'shared/errors', resource: answer
   .field

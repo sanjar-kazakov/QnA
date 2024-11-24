@@ -4,6 +4,8 @@ RSpec.describe Question, type: :model do
   let(:user) { create(:user) }
   let(:question) { create(:question, user:) }
 
+  it_behaves_like 'votable'
+
   describe 'associations' do
     it 'has many answers' do
       create_list(:answer, 2, question:, user:)
@@ -37,17 +39,18 @@ RSpec.describe Question, type: :model do
 
   describe 'nested attributes' do
     it 'accepts nested attributes for links' do
-      link_attributes = [{ name: 'Example link', url: 'http://example.com' }]
-      question_with_links = described_class.new(title: 'Test title', body: 'Test body', user:, links_attributes: link_attributes)
+      link_attr = [{ name: 'Example link', url: 'https://example.com' }]
+      question_with_links = described_class.new(title: 'Test title', body: 'Test body', user:,
+                                                links_attributes: link_attr)
 
       expect(question_with_links.links.size).to eq(1)
       expect(question_with_links.links.first.name).to eq('Example link')
-      expect(question_with_links.links.first.url).to eq('http://example.com')
+      expect(question_with_links.links.first.url).to eq('https://example.com')
     end
 
     it 'accepts nested attributes for badge' do
       badge_attributes = { name: 'Sample Badge' }
-      question = described_class.new(title: 'Test title', body: 'Test body', user:, badge_attributes: badge_attributes)
+      question = described_class.new(title: 'Test title', body: 'Test body', user:, badge_attributes:)
 
       expect(question.badge).not_to be_nil
       expect(question.badge.name).to eq('Sample Badge')

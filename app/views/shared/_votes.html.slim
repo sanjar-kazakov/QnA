@@ -5,10 +5,10 @@
 
     .rating-errors
 
-    - unless is_author?(current_user, resource)
+    - unless author?(current_user, resource)
       p class="vote" style="#{'display: none;' if resource.voted_by?(current_user)}"
-        = link_to "+1", polymorphic_path(resource, action: :vote_up), remote: true, method: :post, data: { type: :json }
+        = link_to "Vote up", polymorphic_path(resource, action: :vote_up), remote: true, method: :post, data: { type: :json }
         = " | "
-        = link_to "-1", polymorphic_path(resource, action: :vote_down), remote: true, method: :post, data: { type: :json }
+        = link_to "Vote down", polymorphic_path(resource, action: :vote_down), remote: true, method: :post, data: { type: :json }
       p class="delete-vote" style="#{'display: none;' unless resource.voted_by?(current_user)}"
         = link_to "delete vote", polymorphic_path(resource, action: :unvote), remote: true, method: :delete, data: { type: :json }
